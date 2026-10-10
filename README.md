@@ -203,7 +203,7 @@ If you like JARVIS, please **⭐ star this repo**. It really helps!
 
 JARVIS is **free to use** for personal use. The source code is **not public**, and redistribution, modification or reselling of the app is not allowed without permission.
 
-© 2026 YOUR NAME. All rights reserved.
+© 2026 Abu Tanim. All rights reserved.
 
 ---
 
