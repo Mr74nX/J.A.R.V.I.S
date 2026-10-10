@@ -1,45 +1,34 @@
 <div align="center">
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=0:00e5ff,100:02080d&height=220&section=header&text=J.A.R.V.I.S&fontSize=72&fontColor=ffffff&fontAlignY=38&desc=Your%20Iron-Man-style%20voice%20assistant%20for%20Windows&descSize=18&descAlignY=60&animation=fadeIn" alt="JARVIS banner" width="100%"/>
+<img src="assets/banner.svg" alt="J.A.R.V.I.S - Voice assistant for Windows" width="100%"/>
 
-<a href="https://github.com/Mr74nX">
-  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=22&duration=3000&pause=900&color=00E5FF&center=true&vCenter=true&width=640&lines=Say+%22Jarvis%22+%E2%80%94+and+your+PC+listens.;Open+apps+with+your+voice.;Check+your+PC+%26+network+instantly.;Talk+to+it+like+a+friend." alt="Typing animation" />
+<br/>
+
+<a href="../../releases/latest">
+  <img src="https://img.shields.io/badge/%E2%AC%87%EF%B8%8F%20%20DOWNLOAD%20NOW-00e5ff?style=for-the-badge&labelColor=02080d" alt="Download" height="52"/>
 </a>
 
-<br/>
+<sub><b>Windows • Free • No Python needed</b></sub>
 
-![Windows](https://img.shields.io/badge/Windows%2010%20%2F%2011-00e5ff?style=for-the-badge&logo=windows&logoColor=black)
-![Free](https://img.shields.io/badge/100%25-FREE-2ea44f?style=for-the-badge)
-![No Install](https://img.shields.io/badge/NO%20INSTALL-REQUIRED-ff3b3b?style=for-the-badge)
-![Voice](https://img.shields.io/badge/VOICE-CONTROLLED-ffb300?style=for-the-badge&logo=googleassistant&logoColor=black)
-
-<br/>
-
-### [⬇️ DOWNLOAD NOW](../../releases/latest)
-
-<sub>Windows • Free • No Python needed</sub>
-
-<br/>
-
-<!-- 📸 ADD YOUR HUD SCREENSHOT / GIF HERE (most important part!)
-<img src="assets/screenshot.png" width="85%" alt="JARVIS HUD"/>
--->
+<br/><br/>
 
 [✨ Features](#-features) &nbsp;•&nbsp; [⬇️ Install](#%EF%B8%8F-download--install) &nbsp;•&nbsp; [🗣️ Commands](#%EF%B8%8F-try-saying) &nbsp;•&nbsp; [⚙️ AI Setup](#%EF%B8%8F-optional-enable-ai-answers) &nbsp;•&nbsp; [❓ FAQ](#-faq)
 
 </div>
 
----
+<!-- 📸 ADD YOUR REAL HUD SCREENSHOT / GIF HERE (most important part!)
+<div align="center"><img src="assets/screenshot.png" width="85%" alt="JARVIS HUD"/></div>
+-->
+
+<img src="assets/divider.svg" width="100%" alt=""/>
 
 ## 👋 What is JARVIS?
 
 **JARVIS** is a voice-controlled desktop assistant with a glowing sci-fi **arc-reactor HUD**.
 
-Just talk to it like a friend. It opens your apps, checks your PC, tests your internet, sets timers, takes notes, answers questions, and even cheers you up. It talks back in a natural voice, and the text on screen stays perfectly in sync with the speech.
+Just talk to it like a friend. It opens your apps, checks your PC, tests your internet, sets timers, takes notes, answers questions, and even cheers you up. It talks back in a natural voice, and the text on screen stays in sync with the speech.
 
 > **Download → Extract → Double-click → Talk.** &nbsp; That's the whole setup.
-
-<br/>
 
 <div align="center">
 
@@ -49,28 +38,29 @@ Just talk to it like a friend. It opens your apps, checks your PC, tests your in
 
 </div>
 
----
+### 🔄 How it works
+
+<div align="center">
+
+| **1️⃣ &nbsp;SAY** | ➜ | **2️⃣ &nbsp;THINK** | ➜ | **3️⃣ &nbsp;ACT & REPLY** |
+|:---:|:---:|:---:|:---:|:---:|
+| *"Jarvis, open YouTube"* | | JARVIS understands you | | Does it, and answers in voice + on screen |
+
+</div>
+
+<img src="assets/divider.svg" width="100%" alt=""/>
 
 ## ⬇️ Download & Install
 
-<table>
-<tr>
-<td>
-
-### ⚠️ IMPORTANT: download BOTH
-
-JARVIS will **not** work with the `.exe` alone. You need these two together:
-
-| # | Download | What it is |
-|:-:|---|---|
-| **1** | 📄 **`Jarvis.exe`** | The app |
-| **2** | 📁 **`_internal`** folder | Files the app needs to run |
-
-**Keep them side by side in the same folder.**
-
-</td>
-</tr>
-</table>
+> ### ⚠️ IMPORTANT: download BOTH
+> JARVIS will **not** work with the `.exe` alone. You need these two together:
+>
+> | # | Download | What it is |
+> |:-:|---|---|
+> | **1** | 📄 **`Jarvis.exe`** | The app |
+> | **2** | 📁 **`_internal`** folder | Files the app needs to run |
+>
+> **Keep them side by side in the same folder.**
 
 ### 🚀 Quick Start
 
@@ -92,7 +82,7 @@ Your folder should look like this:
 
 > 💡 **Windows SmartScreen warning?** Click **More info → Run anyway**. This appears for any new app that is not digitally signed.
 
----
+<img src="assets/divider.svg" width="100%" alt=""/>
 
 ## ✨ Features
 
@@ -149,7 +139,7 @@ Your folder should look like this:
 
 A glowing cyan **arc-reactor interface** that comes alive while JARVIS listens, thinks and speaks.
 
----
+<img src="assets/divider.svg" width="100%" alt=""/>
 
 ## 🗣️ Try Saying
 
@@ -186,7 +176,7 @@ A glowing cyan **arc-reactor interface** that comes alive while JARVIS listens, 
 
 > 💬 You can also just chat: *"I'm bored"*, *"How are you?"*, *"I passed my exam!"*
 
----
+<img src="assets/divider.svg" width="100%" alt=""/>
 
 ## ⚙️ Optional: Enable AI Answers
 
@@ -222,7 +212,7 @@ Then just say *"Jarvis, open my blog"*.
 
 </details>
 
----
+<img src="assets/divider.svg" width="100%" alt=""/>
 
 ## 💻 System Requirements
 
@@ -233,7 +223,7 @@ Then just say *"Jarvis, open my blog"*.
 | 🌐 **Internet** | Needed for speech recognition, weather and AI answers |
 | 🐍 **Python** | ❌ Not needed |
 
----
+<img src="assets/divider.svg" width="100%" alt=""/>
 
 ## ❓ FAQ
 
@@ -273,15 +263,13 @@ Not yet. JARVIS is Windows only for now.
 
 </details>
 
----
+<img src="assets/divider.svg" width="100%" alt=""/>
 
 ## 💬 Feedback & Support
 
 Found a bug or have a feature idea? Open an [Issue](../../issues) and tell me. I read every one!
 
 If you enjoy JARVIS, please **⭐ star this repo**. It really helps!
-
----
 
 ## 📜 License
 
@@ -297,6 +285,6 @@ JARVIS is **free to use** for personal use. The source code is **not public**, a
 
 *"Sometimes you gotta run before you can walk."*
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=0:02080d,100:00e5ff&height=120&section=footer" alt="footer" width="100%"/>
+<img src="assets/divider.svg" width="100%" alt=""/>
 
 </div>
