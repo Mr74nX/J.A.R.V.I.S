@@ -1,0 +1,16 @@
+{
+  "pause": 0.9,
+  "llm": {
+    "base_url": "https://api.groq.com/openai/v1",
+    "api_key": "YOUR_FREE_API_KEY_HERE",
+    "model": "llama-3.3-70b-versatile"
+  },
+  "apps": {
+    "photoshop": "C:\\Program Files\\Adobe\\Adobe Photoshop 2025\\Photoshop.exe",
+    "my game": "C:\\Games\\MyGame\\game.exe"
+  },
+  "sites": {
+    "my blog": "https://example.com",
+    "classroom": "https://classroom.google.com"
+  }
+}
