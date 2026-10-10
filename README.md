@@ -191,23 +191,25 @@ Currently Windows only.
 
 ---
 
-## 🛠️ Built With
+## 💬 Feedback & Support
 
-Python · pywebview (HUD) · SpeechRecognition · pyttsx3 · psutil · HTML/CSS/JS
-
----
-
-## 🤝 Contributing & Support
-
-Found a bug or have an idea? Open an [Issue](../../issues). Pull requests are welcome!
+Found a bug or have a feature idea? Open an [Issue](../../issues) and tell me. I read every one!
 
 If you like JARVIS, please **⭐ star this repo**. It really helps!
 
 ---
 
+## 📜 License
+
+JARVIS is **free to use** for personal use. The source code is **not public**, and redistribution, modification or reselling of the app is not allowed without permission.
+
+© 2026 YOUR NAME. All rights reserved.
+
+---
+
 <div align="center">
 
-**Made with ❤️ by [YOUR NAME](https://github.com/YOUR_USERNAME)**
+**Made with ❤️ by [Mr. Tan](https://github.com/Mr74nX)**
 
 *"Sometimes you gotta run before you can walk."*
 
