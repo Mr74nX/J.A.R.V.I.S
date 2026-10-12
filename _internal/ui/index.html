@@ -133,6 +133,11 @@ body:not([data-page=home]) .col,body:not([data-page=home]) #center{display:none}
 #chips{position:fixed;left:50%;bottom:110px;transform:translateX(-50%);z-index:6;display:none;flex-wrap:wrap;gap:7px;justify-content:center;max-width:90vw}#chips.on{display:flex}#chips button{text-transform:none;letter-spacing:1px;font-family:Consolas,monospace;font-size:12px;padding:6px 11px}
 .mgrid{display:grid;grid-template-columns:1fr 1.4fr;gap:22px}.pg select{width:100%}
 #lv{position:relative;height:24px;border:1px solid var(--c);background:rgba(0,0,0,.45);margin:8px 0}#lv i{display:block;height:100%;width:0;background:var(--c);box-shadow:0 0 10px var(--c);transition:width .1s}#lv u{position:absolute;top:-4px;bottom:-4px;width:2px;background:#fff;left:20%;box-shadow:0 0 6px #fff}
+#updbtn{display:none;margin-left:auto;background:var(--c);color:#000;border:0;font-family:var(--hf);font-size:11px;letter-spacing:2px;padding:7px 14px;cursor:pointer;clip-path:polygon(8px 0,100% 0,100% calc(100% - 8px),calc(100% - 8px) 100%,0 100%,0 8px);animation:updp 1.6s infinite}
+#updbtn.on{display:inline-block}#updbtn.on+#netchip{margin-left:14px}@keyframes updp{50%{box-shadow:0 0 22px var(--c)}}
+#tabs button[data-p=settings].upd::after{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:#ffb300;margin-left:8px;box-shadow:0 0 8px #ffb300}
+.pbar{height:10px;border:1px solid var(--c);margin:14px 0}.pbar i{display:block;height:100%;width:0;background:var(--c);box-shadow:0 0 12px var(--c);transition:width .3s}
+.notes{max-height:200px;overflow:auto;text-align:left;font-size:13px;line-height:1.55;white-space:pre-wrap;border:1px solid color-mix(in srgb,var(--c) 30%,transparent);padding:10px 12px;margin-bottom:14px}
 /* boot */
 #boot{position:fixed;inset:0;z-index:10;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;transition:opacity .9s}
 #boot.hide{opacity:0;pointer-events:none}
@@ -161,7 +166,7 @@ body:not([data-page=home]) .col,body:not([data-page=home]) #center{display:none}
  <div id="hbanner"></div><div id="hbig"></div><div id="hesc">ESC OR CLICK TO ABORT</div></div>
 <div class="ui" id="ui">
  <header class="top"><div><i class="dot"></i>SYSTEM ONLINE · <span id="host">--</span></div><div class="tt"><i></i><h1>J.A.R.V.I.S.</h1><i></i></div><div><span id="badge">LISTENING</span></div></header>
- <nav id="tabs"><button data-p="home" class="on">HOME</button><button data-p="system">SYSTEM</button><button data-p="network">NETWORK</button><button data-p="apps">APPS</button><button data-p="control">CONTROL</button><button data-p="memory">MEMORY</button><button data-p="settings">SETTINGS</button><span id="netchip"><i></i><span>ONLINE</span></span></nav>
+ <nav id="tabs"><button data-p="home" class="on">HOME</button><button data-p="system">SYSTEM</button><button data-p="network">NETWORK</button><button data-p="apps">APPS</button><button data-p="control">CONTROL</button><button data-p="memory">MEMORY</button><button data-p="settings">SETTINGS</button><button id="updbtn"></button><span id="netchip"><i></i><span>ONLINE</span></span></nav>
  <aside class="col">
   <section class="panel"><div class="ph"><span>SYSTEM CORE</span><span id="osn">--</span></div><canvas id="gauges" class="fill"></canvas></section>
   <section class="panel"><div class="ph"><span>CPU HISTORY</span></div><canvas id="cpug" class="fill"></canvas></section>
@@ -356,7 +361,7 @@ const rate=k=>k>=1024?(k/1024).toFixed(1)+' MB/s':Math.round(k)+' KB/s';
 function toast(t){const e=$('#toast');e.textContent=t;e.classList.add('on');clearTimeout(e._t);e._t=setTimeout(()=>e.classList.remove('on'),2800)}
 function ask(msg,yes,label){const m=$('#modal');m.innerHTML=`<div class="mbox"><p>${esc(msg)}</p><div><button id="m_no">CANCEL</button><button id="m_yes" class="warn">${label||'CONFIRM'}</button></div></div>`;m.classList.add('on');$('#m_no').onclick=()=>m.classList.remove('on');$('#m_yes').onclick=()=>{m.classList.remove('on');yes()}}
 function go(p){PAGE=p;document.body.dataset.page=p;clearInterval(poll);poll=0;const pg=$('#pages');pg.onclick=null;pg.innerHTML='';pg.scrollTop=0;
-  document.querySelectorAll('#tabs button').forEach(b=>b.classList.toggle('on',b.dataset.p===p));if(p!=='home'&&PAGES[p])PAGES[p]()}
+  document.querySelectorAll('#tabs button[data-p]').forEach(b=>b.classList.toggle('on',b.dataset.p===p));if(p!=='home'&&PAGES[p])PAGES[p]()}
 function donuts(cv,items){const[x,w,h]=sizeCv(cv);x.clearRect(0,0,w,h);const cw=w/items.length;
   items.forEach(([lb,v],i)=>{const cx=cw*i+cw/2,cy=h/2-6,r=Math.min(cw/2-10,h/2-18),c=v>85?'#ff4d4d':col(1);x.lineCap='round';x.lineWidth=7;x.strokeStyle=col(.16);x.beginPath();x.arc(cx,cy,r,.75*Math.PI,2.25*Math.PI);x.stroke();
     x.strokeStyle=c;x.shadowColor=c;x.shadowBlur=10;x.beginPath();x.arc(cx,cy,r,.75*Math.PI,.75*Math.PI+1.5*Math.PI*Math.max(v,.5)/100);x.stroke();x.shadowBlur=0;
@@ -493,10 +498,10 @@ PAGES.settings=async()=>{
     <div class="set"><div><b>Voice style</b><span>Auto switches to the fast voice if your connection is slow</span></div><select id="s_vm"><option value="auto">Auto</option><option value="natural">Natural (best quality)</option><option value="fast">Fast (instant)</option></select></div>
     <div class="lbl">RESPONSE SPEED <b id="s_pv">${(+s.pause||.8).toFixed(2)} s</b></div><input type="range" id="s_pause" min="0.5" max="1.5" step="0.05" value="${s.pause||.8}"><div class="sub">How long JARVIS waits after you stop talking. Lower = faster, higher = more patient.</div>
     <div class="btnrow"><button id="s_mic">RESTART MICROPHONE</button><button id="s_test">RUN SELF-TEST</button></div></section>
-   <section class="panel"><div class="ph"><span>SYSTEM</span></div>${tg('net_alerts','Network alerts','tell me when the internet drops, returns or gets slow')}${tg('keep_awake','Keep this PC awake','stop Windows sleeping while JARVIS runs')}
-    <div class="set"><div><b>Calling method</b><span>Auto: the phone dials by itself if ADB is ready, otherwise Phone Link opens</span></div><select id="s_call"><option value="auto">Auto</option><option value="phonelink">Phone Link</option><option value="adb">ADB (phone)</option></select></div><div class="btnrow"><button id="s_callchk">CHECK CALLING SETUP</button></div>
+   <section class="panel"><div class="ph"><span>SYSTEM</span></div>${tg('net_alerts','Network alerts','tell me when the internet drops, returns or gets slow')}${tg('auto_update','Check for updates automatically','tell me when a new version is available')}${tg('keep_awake','Keep this PC awake','stop Windows sleeping while JARVIS runs')}
+    <div class="set"><div><b>Calling method</b><span>Auto: the phone dials by itself if ADB is ready, otherwise Phone Link opens</span></div><select id="s_call"><option value="auto">Auto</option><option value="phonelink">Phone Link</option><option value="adb">ADB (phone)</option></select></div><div class="btnrow"><button id="s_callchk">CHECK CALLING SETUP</button><button id="s_upd">CHECK FOR UPDATES</button></div>
     <div class="lbl">COLOUR THEME</div><div class="sw">${themes.map(([c,n])=>`<i title="${n}" data-c="${c}" style="background:${c}" class="${(s.theme||'#00e5ff')===c?'on':''}"></i>`).join('')}</div>
-    <div class="ph" style="margin-top:16px"><span>ABOUT</span></div><div class="kv">${kv('VERSION','J.A.R.V.I.S. '+(s.version||'3.0'))}${kv('ANSWER MODE',s.ai?'AI: written in my own words from several sources':'Basic: merges several sources (add a free key for AI mode)')}${kv('HELP','say “help” or press ?')}${kv('YOUR OWN APPS / SITES','jarvis_config.json')}</div></section>
+    <div class="ph" style="margin-top:16px"><span>ABOUT</span></div><div class="kv">${kv('VERSION','J.A.R.V.I.S. '+(s.version||'3.0'))}${kv('SEARCH','Google first, then DuckDuckGo, Bing, Wikipedia'+(s.google?' · Google: '+s.google:''))}${kv('ANSWER MODE',s.ai?'AI: written in my own words from several sources':'Basic: merges several sources (add a free key for AI mode)')}${kv('HELP','say “help” or press ?')}${kv('YOUR OWN APPS / SITES','jarvis_config.json')}</div></section>
    <section class="panel wide"><div class="ph"><span>MICROPHONE</span><span>HEAR ME CLEARLY, EVEN FROM FAR</span></div><div class="mgrid">
     <div><div class="lbl">INPUT DEVICE</div><select id="s_dev"><option value="">System default</option>${devs.map(d=>`<option value="${d.index}">${esc(d.name)}${d.default?' (default)':''}</option>`).join('')}</select>
      <div class="lbl">SENSITIVITY</div><select id="s_sens"><option value="normal">Normal: close to the mic</option><option value="high">High: recommended</option><option value="far">Far-field: across the room</option></select>
@@ -511,6 +516,7 @@ PAGES.settings=async()=>{
   $('#s_lang').value=s.lang||'en-US';$('#s_lang').onchange=e=>{rpc('settings_set','lang',e.target.value);toast('Listening for '+e.target.selectedOptions[0].textContent.split(':')[0])};
   $('#s_snd').onclick=()=>rpc('send','open sound settings');$('#s_mt').onclick=()=>{rpc('send','can you hear me');toast('Say something now…')};
   hud.level(MIC.r,MIC.t);
+  $('#s_upd').onclick=async()=>{toast('Checking for updates…');showUpdate(await rpc('update_check'))};
   $('#s_call').value=s.call_method||'auto';$('#s_call').onchange=e=>rpc('settings_set','call_method',e.target.value);$('#s_callchk').onclick=async()=>showReport(await rpc('call_check'));
   $('#s_test').onclick=async()=>{toast('Running self-test…');showReport(await rpc('self_test'))};
   $('#s_mic').onclick=()=>{rpc('send','restart the microphone');toast('Restarting the microphone…')};
@@ -526,9 +532,17 @@ const HELP=[['ASK ME ANYTHING',['research electric cars','explain black holes in
  ['CONTROL THE PC',['set volume to 40','brightness 60','pause','next song','show desktop','lock the pc','shut down in 10 minutes','cancel shutdown','close notepad']],
  ['MEMORY AND TEACHING',['my name is …','remember that …','what do you remember','who is …','if someone asks …, say …','call me …']],
  ['PHONE CALLS',['save Rahim\'s number as …','call Rahim','call …','list my contacts','hang up','answer the call']],
- ['FRIENDS AND FUN',['welcome my friends','welcome …','wish … happy birthday','today is … birthday','tell … that …','say good luck to …','eid mubarak to everyone','hack the …','suit up','i am bored']],
+ ['FRIENDS AND FUN',['welcome me','good morning','welcome my friends','welcome …','wish … happy birthday','today is … birthday','tell … that …','say good luck to …','eid mubarak to everyone','hack the …','suit up','i am bored']],
  ['FEELINGS: TELL ME HOW YOU ARE',['i won','i passed my exam','i am so happy','i am sad','i am stressed','i feel lonely','i can not sleep','my exam is tomorrow']],
+ ['UPDATES AND ABOUT',['check for updates','update now','what is new','what version are you']],
  ['SCREENS',['show system panel','show network monitor','show app launcher','show control center','show memory panel','show settings panel','go home']]];
+let UPD=null;
+function showUpdate(info){const m=$('#modal'),close=()=>m.classList.remove('on');m.classList.add('on');
+  if(!info||info.error){m.innerHTML=`<div class="mbox"><p>${esc((info&&info.error)||'I could not check for updates.')}</p><div><button id="m_x">CLOSE</button></div></div>`;$('#m_x').onclick=close;return}
+  if(!info.available){m.innerHTML=`<div class="mbox"><p>You are up to date.<br><span style="color:var(--dim);font-size:12px">J.A.R.V.I.S. ${esc(info.current||'')} is the latest version.</span></p><div><button id="m_x">CLOSE</button></div></div>`;$('#m_x').onclick=close;return}
+  m.innerHTML=`<div class="mbox"><div style="display:block;font-family:var(--hf);letter-spacing:5px;color:var(--c);margin-bottom:8px">NEW VERSION AVAILABLE</div><p style="margin-bottom:10px">Version <b>${esc(info.version)}</b> is ready (you have ${esc(info.current||'')}).</p><div class="notes" style="display:block">${esc(info.notes||'No release notes.')}</div><div id="u_btns"><button id="u_now">UPDATE NOW</button><button id="u_page">RELEASE PAGE</button><button id="u_later">LATER</button></div></div>`;
+  $('#u_later').onclick=close;$('#u_page').onclick=()=>{info.page&&window.open(info.page,'_blank')};
+  $('#u_now').onclick=async()=>{m.querySelector('.mbox').innerHTML=`<p id="u_msg">Downloading the update…</p><div class="pbar"><i id="u_bar"></i></div><div style="display:none" id="u_x"><button id="u_c">CLOSE</button></div>`;const r=await rpc('update_install');if(r&&!/Downloading/.test(r)){$('#u_msg').textContent=r;$('#u_x').style.display='flex';$('#u_c').onclick=close}}}
 function showReport(rows){const m=$('#modal');m.innerHTML=`<div class="mbox help"><div style="display:block;text-align:center;font-family:var(--hf);letter-spacing:6px;color:var(--c)">SELF-TEST REPORT</div><div style="display:block;margin-top:14px">${(rows||[]).map(r=>`<div class="li"><span><b style="color:${r.ok?'#19ff6a':'#ff6b6b'}">${r.ok?'✔':'✖'}</b>&nbsp; ${esc(r.name)}<br><em>${esc(r.detail)}</em></span></div>`).join('')}</div><div style="margin-top:18px;justify-content:center"><button id="h_close">CLOSE</button></div></div>`;
   m.classList.add('on');m.onclick=e=>{if(e.target===m||e.target.id==='h_close')m.classList.remove('on')}}
 function showHelp(){const m=$('#modal');m.innerHTML=`<div class="mbox help"><div style="display:block;text-align:center;font-family:var(--hf);letter-spacing:6px;color:var(--c)">WHAT CAN I DO?</div><div style="display:block;text-align:center;font-size:12px;color:var(--dim);margin-top:4px">Click any example to try it, or just say it out loud.</div>${HELP.map(([h,l])=>`<h3>${h}</h3><div class="chipwrap">${l.map(x=>`<button data-x="${esc(x)}">${esc(x)}</button>`).join('')}</div>`).join('')}<div style="margin-top:18px;justify-content:center"><button id="h_close">CLOSE</button></div></div>`;
@@ -546,11 +560,13 @@ const DEMO={_s:0,_h(base,amp){return Array.from({length:90},(_,i)=>Math.max(0,ba
  apps_list:()=>['Calculator','Camera','Chrome','Discord','Excel','File Explorer','Firefox','Notepad','Paint','Photos','Settings','Snipping Tool','Spotify','Task Manager','VLC','Visual Studio Code','WhatsApp','Word'],
  sites_list:()=>['claude','facebook','github','gmail','instagram','netflix','reddit','spotify','whatsapp','youtube'],launch:n=>'Opening '+n+', Sir.',
  get_brightness:()=>70,set_brightness:()=>true,set_volume:()=>true,power:(k)=>'Demo: '+k,prank:n=>{hud.hack(n);return true},
+ update_check:()=>({available:true,version:'3.3',current:'3.2',notes:'What is new in 3.3\n- Google is now the first search source\n- New version notice and one-click update\n- Friendlier replies to everything you say\n- "Welcome to me" greets you, not a stranger',page:'#'}),
+ update_install:()=>{let p=0;const iv=setInterval(()=>{p+=14;hud.updprogress(Math.min(p,100));if(p>=100)clearInterval(iv)},400);return 'Downloading the update now, Sir.'},
  contact_add:()=>true,contact_del:()=>true,call_contact:n=>'Demo: calling…',call_check:()=>[{name:'ADB (phone dials by itself)',ok:false,detail:'not found'},{name:'Phone Link app',ok:true,detail:'installed'},{name:'Calling method',ok:true,detail:'auto'}],
  memory_get:()=>({contacts:[{name:'Rahim',number:'01712345678'},{name:'Nila',number:'01812345678'}],name:'Abu Tanim',address:'Sir',facts:[{t:'my birthday is 5 May'},{t:"Rahim is my best friend and he lives in Dhaka"}],qa:[{q:'who made you',a:'Mr Tan built me with love.'}]}),
  mic_devices:()=>[{index:1,name:'Microphone Array (Realtek Audio)',default:true},{index:3,name:'Headset Microphone (USB)'}],
  self_test:()=>[{name:'Microphone',ok:true,detail:'1 input device found'},{name:'Wake word mode',ok:false,detail:'ON: I only react when you start with “Jarvis”. Turn it off in Settings'},{name:'Internet',ok:true,detail:'21 ms'}],
- settings_get:()=>({call_method:'auto',ai:false,timing:false,sens:'high',lang:'en-US',mic_device:null,voice:true,mic:true,wake:false,beep:false,pause:.8,voice_mode:'auto',net_alerts:true,keep_awake:false,theme:C,version:'3.0'}),settings_set:()=>true,
+ settings_get:()=>({google:'working: official API',auto_update:true,version:'3.2',call_method:'auto',ai:false,timing:false,sens:'high',lang:'en-US',mic_device:null,voice:true,mic:true,wake:false,beep:false,pause:.8,voice_mode:'auto',net_alerts:true,keep_awake:false,theme:C,version:'3.0'}),settings_set:()=>true,
  send:t=>{demoSend(t)}};
 // ---- API called from Python
 const hud={
@@ -560,7 +576,7 @@ const hud={
   stats(o){tg.cpu=o.cpu;tg.mem=o.ram;tg.dsk=o.disk;hist.push(o.cpu);hist.shift();cpuGraph();
     $('#bat').textContent=o.bat==null?'AC POWER':o.bat+'%'+(o.plug?' · CHARGING':'');$('#up').textContent=o.up+' KB/s';$('#dn').textContent=o.down+' KB/s';
     $('#upt').textContent=fmtUp(o.uptime);$('#inet').textContent=o.online===false?'OFFLINE':(o.lat!=null?'ONLINE · '+o.lat+' ms':'ONLINE');const nc=$('#netchip');nc.className=o.online===false?'off':'';nc.lastChild.textContent=o.online===false?'INTERNET DOWN':'ONLINE'+(o.lat!=null?' · '+o.lat+' ms':'');$('#prc').textContent=o.procs;$('#host').textContent=o.host;$('#osn').textContent=o.os},
-  theme(c){setTheme(c)},page(n){go(n)},help(){showHelp()},report(r){showReport(r)},level(r,t){MIC.r=r;MIC.t=t;const b=$('#lv_bar');if(b){const sc=Math.max(t*4,300);b.style.width=Math.min(100,r/sc*100)+'%';$('#lv_thr').style.left=Math.min(100,t/sc*100)+'%';$('#lv_txt').textContent=r+'  ·  threshold '+t}},toast(t){toast(t)},
+  theme(c){setTheme(c)},page(n){go(n)},help(){showHelp()},report(r){showReport(r)},update(i){UPD=i;const b=$('#updbtn');b.textContent='⬆ UPDATE '+i.version;b.classList.add('on');document.querySelector('#tabs button[data-p=settings]').classList.add('upd');toast('A new version ('+i.version+') is available')},updprogress(p){const bar=$('#u_bar');if(!bar)return;if(p<0){$('#u_msg').textContent='The update failed. Details are in the Comm Log.';$('#u_x').style.display='flex';$('#u_c').onclick=()=>$('#modal').classList.remove('on')}else{bar.style.width=p+'%';$('#u_msg').textContent=p>=100?'Update downloaded. Restarting…':'Downloading the update… '+p+'%'}},level(r,t){MIC.r=r;MIC.t=t;const b=$('#lv_bar');if(b){const sc=Math.max(t*4,300);b.style.width=Math.min(100,r/sc*100)+'%';$('#lv_thr').style.left=Math.min(100,t/sc*100)+'%';$('#lv_txt').textContent=r+'  ·  threshold '+t}},toast(t){toast(t)},
   hack(n){hackStart(n)},hackEnd(){hackStop(false)},
   btn(n,t){const b=$('#b'+n);if(b)b.textContent=t}
 };
@@ -573,7 +589,7 @@ function toggleType(){dock.classList.toggle('typing');const on=dock.classList.co
 function sendText(t){if(!t)return;if(api)api.send(t);else demoSend(t)}
 tin.addEventListener('keydown',e=>{if(e.key==='Enter'){sendText(tin.value.trim());tin.value=''}if(e.key==='Escape')toggleType()});
 $('#bmic').onclick=()=>demo?hud.btn('mic','MIC: DEMO'):call('toggle_mic');
-$('#bkey').onclick=toggleType;$('#bhelp').onclick=showHelp;
+$('#bkey').onclick=toggleType;$('#updbtn').onclick=()=>showUpdate(UPD);$('#bhelp').onclick=showHelp;
 $('#tabs').onclick=e=>{const b=e.target.closest('button');if(b)go(b.dataset.p)};
 $('#chips').innerHTML=['network status','tell me about my pc','what is using my cpu','speed test','open chrome','tell me a joke','hack the friend'].map(x=>`<button>${x}</button>`).join('');$('#chips').onclick=e=>{const b=e.target.closest('button');if(b)sendText(b.textContent)};
 $('#bwake').onclick=()=>call('toggle_wake');$('#bvoice').onclick=()=>call('toggle_voice');
@@ -584,6 +600,7 @@ addEventListener('keydown',e=>{const inp=/INPUT|SELECT|TEXTAREA/.test((document.
   if(e.altKey&&/^[1-7]$/.test(e.key)){go(['home','system','network','apps','control','memory','settings'][+e.key-1]);return}
   if((e.ctrlKey&&e.key==='k')||(e.key==='/'&&document.activeElement!==tin)){e.preventDefault();toggleType()}});
 setInterval(()=>{const d=new Date();$('#clock').textContent=pad(d.getHours())+':'+pad(d.getMinutes())+':'+pad(d.getSeconds());$('#date').textContent=d.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'}).toUpperCase()},250);
+setTimeout(()=>{if(!api)hud.update(DEMO.update_check())},9000);
 setInterval(()=>{if(api)return;const spike=Math.random()<.12;hud.level(spike?Math.round(250+Math.random()*350):Math.round(18+Math.random()*14),44)},180);
 // ---- boot + demo mode (when opened in a plain browser)
 const bl=["J.A.R.V.I.S. v2.0","> initializing arc reactor ............ OK","> calibrating voice core ........... OK","> linking system sensors ........... OK","> loading memory ................... OK","> loading protocols ................ OK","","WELCOME BACK, SIR."];let bi=0;
