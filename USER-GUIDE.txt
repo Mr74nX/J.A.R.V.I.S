@@ -11,6 +11,28 @@ MAKE IT A REAL APP (.exe)
 5) Double-click shortcuts.bat -> Desktop icon + optional auto-start with Windows
    Share the whole dist\JARVIS folder (zip it) to give the app to someone else.
 
+READ MY SCREEN (only when you ask)
+  "what is on my screen", "describe my screen", "read this", "read the error", "explain this error", "what window is this", "read what I copied",
+  "explain what I copied", "read what I selected". JARVIS hides its own window for a moment, takes a picture, and reads the text with the OCR built into
+  Windows (works offline, nothing leaves your PC). Without an AI key it gives a short local summary and picks out error lines.
+  With an AI key it can explain properly, but it ALWAYS asks first ("Is that okay? Say yes") before sending screen text to your AI provider.
+  Optional picture understanding: add "vision": {"model": "<a vision-capable model of your provider>"} to jarvis_config.json; again it asks before it sends a screenshot.
+  JARVIS never watches or reads your screen by itself: it only looks when you ask. Do not use it on screens that show passwords or private chats if you use the AI options.
+
+LIVE NEWS
+  "tell me the news", "technology news", "sports news", "bangladesh news", "news about electric cars", "what is happening in Japan", "cyber security news",
+  "tell me more about number two" (researches that story), "open number one". Also the NEWS tab (categories + search, click a story).
+  Sources: Google News and BBC feeds, plus The Hacker News, BleepingComputer and Krebs for security. Headlines are only as reliable as their publishers:
+  JARVIS does not check whether a story is true. Settings > News edition chooses the country used for "the news".
+
+CYBER SECURITY (defensive: this PC and your own network)
+  "run a security check" / "is my PC secure": antivirus, firewall, Remote Desktop, SMBv1, UAC, shares, admins, updates, BitLocker, startup programs, risky open
+  ports and Wi-Fi security, with a score and how to fix each item (it changes nothing). Some checks need JARVIS to run as administrator.
+  "is my Wi-Fi secure", "tell me about CVE 2021 44228", "latest critical vulnerabilities" (NIST database), "is the link in my clipboard safe" (quick heuristics, not a guarantee),
+  "generate a strong password" (copied to the clipboard and shown in the log, never spoken), "security tips". The SECURITY tab adds a password test (typed, only 5 characters of its hash go to
+  Have I Been Pwned), link check, hash/Base64/URL/JWT tools and security news.
+  JARVIS will not scan or attack other people's systems and it writes no exploits or malware. For authorised penetration tests use dedicated tools such as nmap.
+
 UPDATES (v3.2+)
   JARVIS checks GitHub Releases 25 s after start and then every 6 hours. When a newer version exists you see a glowing "UPDATE x.y" button next to
   the tabs, an orange dot on SETTINGS, and JARVIS tells you. Click it (or say "update now", then "yes"): the new version is downloaded, checked against its
@@ -111,7 +133,7 @@ RELIABILITY AND SPEED
   Windows 11 "efficiency mode" is switched off for JARVIS so he does not slow down after long idle.
   Settings > "Keep this PC awake" stops Windows from sleeping while JARVIS runs.
 
-SCREENS (tabs at the top, or say "show network monitor" etc., Alt+1..7)
+SCREENS (tabs at the top, or say "show network monitor" etc., Alt+1..9)
   HOME | SYSTEM (specs, load, drives, top processes with END) | NETWORK (live traffic, latency, Wi-Fi, apps using the internet,
   open ports, scan my network, speed test, ping) | APPS (every installed app + sites + folders) | CONTROL (volume, brightness, media,
   power buttons that ask first, quick actions, prank) | MEMORY (what I remember, taught answers) | SETTINGS. HELP button or "?" shows examples to click.
