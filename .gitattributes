@@ -1,3 +1,4 @@
 *.exe filter=lfs diff=lfs merge=lfs -text
 JARVIS filter=lfs diff=lfs merge=lfs -text
 JARVIS.exe filter=lfs diff=lfs merge=lfs -text
+_internal.7z filter=lfs diff=lfs merge=lfs -text
