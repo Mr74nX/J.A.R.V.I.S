@@ -88,9 +88,17 @@ canvas.fill{display:block;width:100%}
 #hbig p{font-size:20px;margin-top:18px;color:#d8ffe5}
 #hesc{position:absolute;right:20px;bottom:6px;font-size:11px;letter-spacing:3px;opacity:.5;z-index:5}
 /* ---- navigation tabs + pages ---- */
-#tabs{grid-column:1/4;display:flex;align-items:center;gap:6px;font-family:var(--hf)}
-#tabs button{background:transparent;border:0;box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--c) 40%,transparent);color:var(--dim);font:inherit;font-size:11px;letter-spacing:3px;padding:7px 16px;cursor:pointer;clip-path:polygon(8px 0,100% 0,100% calc(100% - 8px),calc(100% - 8px) 100%,0 100%,0 8px);transition:.2s}
-#tabs button:hover{color:var(--c)}#tabs button.on{background:var(--c);color:#000;box-shadow:0 0 16px var(--c)}
+#tabs{grid-column:1/4;position:relative;display:flex;align-items:center;gap:3px;font-family:var(--hf);overflow-x:auto;overflow-y:hidden;scrollbar-width:none;padding-bottom:1px;
+  background:linear-gradient(90deg,var(--bg) 0,transparent 24px) local,linear-gradient(90deg,transparent calc(100% - 24px),var(--bg) 100%) local,
+  radial-gradient(farthest-side at 0 50%,rgba(0,0,0,.5),transparent) left/16px 100% scroll,radial-gradient(farthest-side at 100% 50%,rgba(0,0,0,.5),transparent) right/16px 100% scroll;background-repeat:no-repeat;background-color:var(--bg)}
+#tabs::-webkit-scrollbar{display:none}
+#tabs::before{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:linear-gradient(90deg,color-mix(in srgb,var(--c) 45%,transparent),transparent 85%)}
+#tabs button{position:relative;flex:none;background:transparent;border:0;color:var(--dim);font:inherit;font-size:10px;letter-spacing:2px;padding:7px 12px 8px;cursor:pointer;white-space:nowrap;transition:.2s;display:flex;align-items:center;gap:7px}
+#tabs button i{display:block;width:7px;height:7px;border-radius:50%;border:1.5px solid currentColor;box-shadow:0 0 0 3px transparent;transition:.2s}
+#tabs button:hover{color:var(--c)}
+#tabs button.on{color:var(--c);text-shadow:0 0 8px var(--c)}
+#tabs button.on i{background:var(--c);box-shadow:0 0 8px var(--c),0 0 0 3px color-mix(in srgb,var(--c) 18%,transparent)}
+#tabs button.on::after{content:"";position:absolute;left:10px;right:10px;bottom:-1px;height:2px;background:var(--c);box-shadow:0 0 8px var(--c)}
 #netchip{margin-left:auto;font-size:11px;letter-spacing:2px;color:var(--dim);white-space:nowrap}
 #netchip i{display:inline-block;width:8px;height:8px;border-radius:50%;background:#19ff6a;margin-right:8px;box-shadow:0 0 8px #19ff6a}
 #netchip.off{color:#ff6b6b}#netchip.off i{background:#ff3b3b;box-shadow:0 0 8px #ff3b3b;animation:bl .6s infinite}
@@ -98,7 +106,7 @@ canvas.fill{display:block;width:100%}
 body:not([data-page=home]) #pages{display:block}
 body:not([data-page=home]) .col,body:not([data-page=home]) #center{display:none}
 .pg{display:grid;gap:12px;align-content:start}
-.pg.sys{grid-template-columns:1fr 1.2fr 1fr}.pg.net{grid-template-columns:repeat(4,1fr)}.pg.apps{grid-template-columns:2.2fr 1fr}.pg.ctl{grid-template-columns:repeat(2,1fr)}.pg.mem{grid-template-columns:1fr 1fr}.pg.stg{grid-template-columns:1fr 1fr}
+.pg.sys{grid-template-columns:1fr 1.2fr 1fr}.pg.net{grid-template-columns:repeat(4,1fr)}.pg.apps{grid-template-columns:2.2fr 1fr}.pg.ctl{grid-template-columns:repeat(2,1fr)}.pg.mem{grid-template-columns:1fr 1fr}.pg.stg{grid-template-columns:1fr 1fr}.pg.news{grid-template-columns:1fr}.pg.sec{grid-template-columns:1fr 1fr}.pg.rem{grid-template-columns:1fr}.li.nw:hover{background:color-mix(in srgb,var(--c) 10%,transparent)}
 .pg .wide{grid-column:1/-1}.pg.net .c2{grid-column:span 2}
 .kv>div{display:flex;justify-content:space-between;gap:12px;font-size:12px;padding:5px 0;border-bottom:1px solid color-mix(in srgb,var(--c) 14%,transparent)}.kv span{color:var(--dim);white-space:nowrap}.kv b{font-weight:400;color:var(--tx);text-align:right}
 .big{font-family:var(--hf);font-size:30px;color:#fff;text-shadow:0 0 14px var(--c);line-height:1.2}.big.bad{color:#ff6b6b;text-shadow:0 0 14px #ff3b3b}.sub{font-size:11px;color:var(--dim);margin-top:2px}
@@ -166,7 +174,7 @@ body:not([data-page=home]) .col,body:not([data-page=home]) #center{display:none}
  <div id="hbanner"></div><div id="hbig"></div><div id="hesc">ESC OR CLICK TO ABORT</div></div>
 <div class="ui" id="ui">
  <header class="top"><div><i class="dot"></i>SYSTEM ONLINE · <span id="host">--</span></div><div class="tt"><i></i><h1>J.A.R.V.I.S.</h1><i></i></div><div><span id="badge">LISTENING</span></div></header>
- <nav id="tabs"><button data-p="home" class="on">HOME</button><button data-p="system">SYSTEM</button><button data-p="network">NETWORK</button><button data-p="apps">APPS</button><button data-p="control">CONTROL</button><button data-p="memory">MEMORY</button><button data-p="settings">SETTINGS</button><button id="updbtn"></button><span id="netchip"><i></i><span>ONLINE</span></span></nav>
+ <nav id="tabs"><button data-p="home" class="on"><i></i>HOME</button><button data-p="system"><i></i>SYSTEM</button><button data-p="network"><i></i>NETWORK</button><button data-p="apps"><i></i>APPS</button><button data-p="control"><i></i>CONTROL</button><button data-p="memory"><i></i>MEMORY</button><button data-p="reminders"><i></i>REMINDERS</button><button data-p="news"><i></i>NEWS</button><button data-p="security"><i></i>SECURITY</button><button data-p="settings"><i></i>SETTINGS</button><button id="updbtn"></button><span id="netchip"><i></i><span>ONLINE</span></span></nav>
  <aside class="col">
   <section class="panel"><div class="ph"><span>SYSTEM CORE</span><span id="osn">--</span></div><canvas id="gauges" class="fill"></canvas></section>
   <section class="panel"><div class="ph"><span>CPU HISTORY</span></div><canvas id="cpug" class="fill"></canvas></section>
@@ -242,7 +250,7 @@ function wave(t){const[x,w,h]=sizeCv($('#wave'));x.clearRect(0,0,w,h);
   for(let k=0;k<3;k++){x.beginPath();x.strokeStyle=col(.95-k*.28);x.lineWidth=2-k*.5;x.shadowColor=C;x.shadowBlur=8;
     for(let i=0;i<=w;i+=3){const e=Math.sin(i/w*Math.PI),y=h/2+Math.sin(i*.03+t*(3+k))*h*.42*(.08+amp)*e*(1-k*.25)+Math.sin(i*.07-t*2)*h*.1*amp*e;i?x.lineTo(i,y):x.moveTo(i,y)}x.stroke()}}
 function gauges(){const[x,w,h]=sizeCv($('#gauges'));x.clearRect(0,0,w,h);const items=[['CPU','cpu'],['MEMORY','mem'],['DISK','dsk']],cw=w/3;
-  items.forEach(([lb,k],i)=>{gv[k]+=(tg[k]-gv[k])*.08;const cx=cw*i+cw/2,cy=h/2-8,r=Math.min(cw/2-8,h/2-18);
+  items.forEach(([lb,k],i)=>{gv[k]+=(tg[k]-gv[k])*.08;const cx=cw*i+cw/2,cy=h/2-8,r=Math.max(1,Math.min(cw/2-8,h/2-18));
     x.lineCap='round';x.lineWidth=6;x.strokeStyle=col(.16);x.beginPath();x.arc(cx,cy,r,.75*Math.PI,2.25*Math.PI);x.stroke();
     x.strokeStyle=col(1);x.shadowColor=C;x.shadowBlur=10;x.beginPath();x.arc(cx,cy,r,.75*Math.PI,.75*Math.PI+1.5*Math.PI*Math.max(gv[k],.5)/100);x.stroke();x.shadowBlur=0;
     x.textAlign='center';x.fillStyle='#fff';x.font="bold 15px Bahnschrift,'Segoe UI',sans-serif";x.fillText(Math.round(gv[k]),cx,cy+5);
@@ -277,7 +285,7 @@ requestAnimationFrame(frame);
 const L=$('#log');let tw,rt,ht;
 let twr=0;
 function say(t,ms){cancelAnimationFrame(twr);clearTimeout(rt);const el=$('#reply');el.style.opacity=1;el.style.fontSize=t.length>150?'13px':t.length>100?'15px':'17px';
-  const dur=Math.max(250,(ms||t.length*60)*.75),t0=performance.now();     // time based, so it stays in sync with the voice even if the screen renders slowly
+  const dur=Math.max(180,(ms||t.length*55)*.5),t0=performance.now();     // time based, finishes a little ahead of the voice so it never looks like it's catching up
   (function step(now){const k=Math.min(1,(now-t0)/dur);el.textContent=t.slice(0,Math.ceil(k*t.length));if(k<1)twr=requestAnimationFrame(step);else rt=setTimeout(()=>el.style.opacity=0,6000)})(t0)}
 function heard(t){const h=$('#heard');h.textContent='“'+t+'”';h.style.opacity=1;clearTimeout(ht);ht=setTimeout(()=>h.style.opacity=0,7000)}
 const hist=Array(60).fill(0);
@@ -363,7 +371,7 @@ function ask(msg,yes,label){const m=$('#modal');m.innerHTML=`<div class="mbox"><
 function go(p){PAGE=p;document.body.dataset.page=p;clearInterval(poll);poll=0;const pg=$('#pages');pg.onclick=null;pg.innerHTML='';pg.scrollTop=0;
   document.querySelectorAll('#tabs button[data-p]').forEach(b=>b.classList.toggle('on',b.dataset.p===p));if(p!=='home'&&PAGES[p])PAGES[p]()}
 function donuts(cv,items){const[x,w,h]=sizeCv(cv);x.clearRect(0,0,w,h);const cw=w/items.length;
-  items.forEach(([lb,v],i)=>{const cx=cw*i+cw/2,cy=h/2-6,r=Math.min(cw/2-10,h/2-18),c=v>85?'#ff4d4d':col(1);x.lineCap='round';x.lineWidth=7;x.strokeStyle=col(.16);x.beginPath();x.arc(cx,cy,r,.75*Math.PI,2.25*Math.PI);x.stroke();
+  items.forEach(([lb,v],i)=>{const cx=cw*i+cw/2,cy=h/2-6,r=Math.max(1,Math.min(cw/2-10,h/2-18)),c=v>85?'#ff4d4d':col(1);x.lineCap='round';x.lineWidth=7;x.strokeStyle=col(.16);x.beginPath();x.arc(cx,cy,r,.75*Math.PI,2.25*Math.PI);x.stroke();
     x.strokeStyle=c;x.shadowColor=c;x.shadowBlur=10;x.beginPath();x.arc(cx,cy,r,.75*Math.PI,.75*Math.PI+1.5*Math.PI*Math.max(v,.5)/100);x.stroke();x.shadowBlur=0;
     x.textAlign='center';x.fillStyle='#fff';x.font="bold 16px Bahnschrift,'Segoe UI',sans-serif";x.fillText(Math.round(v)+'%',cx,cy+6);x.fillStyle=col(.8);x.font='10px Consolas,monospace';x.fillText(lb,cx,cy+r+16)})}
 function lineChart(cv,series,fmt){const[x,w,h]=sizeCv(cv);x.clearRect(0,0,w,h);const N=90,max=Math.max(1,...series.flatMap(s=>s.d))*1.15;
@@ -453,7 +461,7 @@ PAGES.control=async()=>{
     <div class="btnrow"><button data-p="lock">LOCK</button><button data-p="sleep">SLEEP</button><button data-p="hibernate">HIBERNATE</button><button class="warn" data-p="signout">SIGN OUT</button><button class="warn" data-p="restart">RESTART</button><button class="warn" data-p="shutdown">SHUT DOWN</button></div>
     <div class="btnrow"><span class="sub">IN</span><input type="number" id="c_min" min="1" value="30" style="max-width:90px"><span class="sub">MINUTES</span><button class="warn" id="c_sched">SCHEDULE SHUTDOWN</button><button id="c_cancel">CANCEL SCHEDULED</button></div></section>
    <section class="panel"><div class="ph"><span>QUICK ACTIONS</span></div><div class="btnrow">
-    <button data-c="take a screenshot">SCREENSHOT</button><button data-c="show desktop">SHOW DESKTOP</button><button data-c="switch window">SWITCH WINDOW</button><button data-c="open wifi settings">WI-FI SETTINGS</button><button data-c="open bluetooth settings">BLUETOOTH</button><button data-c="open display settings">DISPLAY</button><button data-c="open sound settings">SOUND</button><button data-c="open update settings">WINDOWS UPDATE</button><button class="warn" data-c="empty the recycle bin">EMPTY RECYCLE BIN</button></div></section>
+    <button data-c="what is on my screen">DESCRIBE MY SCREEN</button><button data-c="read what i copied">READ CLIPBOARD</button><button data-c="take a screenshot">SCREENSHOT</button><button data-c="show desktop">SHOW DESKTOP</button><button data-c="switch window">SWITCH WINDOW</button><button data-c="open wifi settings">WI-FI SETTINGS</button><button data-c="open bluetooth settings">BLUETOOTH</button><button data-c="open display settings">DISPLAY</button><button data-c="open sound settings">SOUND</button><button data-c="open update settings">WINDOWS UPDATE</button><button class="warn" data-c="empty the recycle bin">EMPTY RECYCLE BIN</button></div></section>
    <section class="panel"><div class="ph"><span>FRIENDS AND FUN</span></div>
     <div class="btnrow"><input id="c_fr" placeholder="friend's name (optional)"><button id="c_hack">HACK PRANK</button></div><div class="sub">A harmless fake-hacking screen. Press ESC to stop.</div>
     <div class="btnrow"><button data-c="tell me a joke">JOKE</button><button data-c="tell me something interesting">FUN FACT</button><button data-c="suit up">SUIT UP</button><button data-c="welcome my friends">WELCOME GUESTS</button></div></section></div>`;
@@ -479,7 +487,7 @@ PAGES.memory=async()=>{
       <div>${m.qa.map((r,i)=>`<div class="li"><span><em>when asked:</em> ${esc(r.q)}<br><em>I say:</em> ${esc(r.a)}</span><button data-q="${i}" class="warn" style="padding:3px 9px;font-size:10px">DELETE</button></div>`).join('')||'<div class="sub">No custom answers yet.</div>'}</div>
       <div class="btnrow"><input id="q_q" placeholder="When someone says…"></div><div class="btnrow"><input id="q_a" placeholder="…I answer"><button id="q_add">TEACH</button></div></section>
      <section class="panel wide"><div class="ph"><span>CONTACTS FOR PHONE CALLS</span><span>${(m.contacts||[]).length}</span></div>
-      <div>${(m.contacts||[]).map((c,i)=>`<div class="li"><span><b>${esc(c.name)}</b> &nbsp; <em>${esc(c.number)}</em></span><span style="flex:none"><button data-call="${i}" style="padding:3px 10px;font-size:10px">CALL</button> <button data-cd="${i}" class="warn" style="padding:3px 9px;font-size:10px">DELETE</button></span></div>`).join('')||'<div class="sub">No contacts yet. Say “save Rahim’s number as …” or add one below.</div>'}</div>
+      <div>${(m.contacts||[]).map((c,i)=>`<div class="li"><span><b>${esc(c.name)}</b> &nbsp; <em>${esc(c.number)}</em></span><span style="flex:none">${copyBtn(c.number)} <button data-call="${i}" style="padding:3px 10px;font-size:10px">CALL</button> <button data-cd="${i}" class="warn" style="padding:3px 9px;font-size:10px">DELETE</button></span></div>`).join('')||'<div class="sub">No contacts yet. Say “save Rahim’s number as …” or add one below.</div>'}</div>
       <div class="btnrow"><input id="ct_n" placeholder="Name"><input id="ct_p" placeholder="Phone number, e.g. 01712345678"><button id="ct_add">SAVE CONTACT</button></div>
       <div class="sub">Calls go through Phone Link (Bluetooth) or, if you set up ADB, straight from your phone. Check it in Settings: CHECK CALLING SETUP.</div></section></div>`;
     $('#m_save').onclick=async()=>{await rpc('settings_set','name',$('#m_name').value);await rpc('settings_set','address',$('#m_addr').value);toast('Saved')};
@@ -498,7 +506,8 @@ PAGES.settings=async()=>{
     <div class="set"><div><b>Voice style</b><span>Auto switches to the fast voice if your connection is slow</span></div><select id="s_vm"><option value="auto">Auto</option><option value="natural">Natural (best quality)</option><option value="fast">Fast (instant)</option></select></div>
     <div class="lbl">RESPONSE SPEED <b id="s_pv">${(+s.pause||.8).toFixed(2)} s</b></div><input type="range" id="s_pause" min="0.5" max="1.5" step="0.05" value="${s.pause||.8}"><div class="sub">How long JARVIS waits after you stop talking. Lower = faster, higher = more patient.</div>
     <div class="btnrow"><button id="s_mic">RESTART MICROPHONE</button><button id="s_test">RUN SELF-TEST</button></div></section>
-   <section class="panel"><div class="ph"><span>SYSTEM</span></div>${tg('net_alerts','Network alerts','tell me when the internet drops, returns or gets slow')}${tg('auto_update','Check for updates automatically','tell me when a new version is available')}${tg('keep_awake','Keep this PC awake','stop Windows sleeping while JARVIS runs')}
+   <section class="panel"><div class="ph"><span>SYSTEM</span></div>${tg('net_alerts','Network alerts','tell me when the internet drops, returns or gets slow')}${tg('auto_update','Check for updates automatically','tell me when a new version is available')}
+    <div class="set"><div><b>News edition</b><span>Which country's headlines "the news" uses</span></div><select id="s_ne">${['us','bangladesh','india','uk','australia','canada','pakistan','singapore','new zealand','ireland','south africa','philippines','malaysia','nigeria','kenya'].map(c=>`<option value="${c}">${c.replace(/\b\w/g,x=>x.toUpperCase())}</option>`).join('')}</select></div>${tg('keep_awake','Keep this PC awake','stop Windows sleeping while JARVIS runs')}
     <div class="set"><div><b>Calling method</b><span>Auto: the phone dials by itself if ADB is ready, otherwise Phone Link opens</span></div><select id="s_call"><option value="auto">Auto</option><option value="phonelink">Phone Link</option><option value="adb">ADB (phone)</option></select></div><div class="btnrow"><button id="s_callchk">CHECK CALLING SETUP</button><button id="s_upd">CHECK FOR UPDATES</button></div>
     <div class="lbl">COLOUR THEME</div><div class="sw">${themes.map(([c,n])=>`<i title="${n}" data-c="${c}" style="background:${c}" class="${(s.theme||'#00e5ff')===c?'on':''}"></i>`).join('')}</div>
     <div class="ph" style="margin-top:16px"><span>ABOUT</span></div><div class="kv">${kv('VERSION','J.A.R.V.I.S. '+(s.version||'3.0'))}${kv('SEARCH','Google first, then DuckDuckGo, Bing, Wikipedia'+(s.google?' · Google: '+s.google:''))}${kv('ANSWER MODE',s.ai?'AI: written in my own words from several sources':'Basic: merges several sources (add a free key for AI mode)')}${kv('HELP','say “help” or press ?')}${kv('YOUR OWN APPS / SITES','jarvis_config.json')}</div></section>
@@ -517,6 +526,7 @@ PAGES.settings=async()=>{
   $('#s_snd').onclick=()=>rpc('send','open sound settings');$('#s_mt').onclick=()=>{rpc('send','can you hear me');toast('Say something now…')};
   hud.level(MIC.r,MIC.t);
   $('#s_upd').onclick=async()=>{toast('Checking for updates…');showUpdate(await rpc('update_check'))};
+  $('#s_ne').value=s.news_edition||'us';$('#s_ne').onchange=e=>rpc('settings_set','news_edition',e.target.value);
   $('#s_call').value=s.call_method||'auto';$('#s_call').onchange=e=>rpc('settings_set','call_method',e.target.value);$('#s_callchk').onclick=async()=>showReport(await rpc('call_check'));
   $('#s_test').onclick=async()=>{toast('Running self-test…');showReport(await rpc('self_test'))};
   $('#s_mic').onclick=()=>{rpc('send','restart the microphone');toast('Restarting the microphone…')};
@@ -525,17 +535,95 @@ PAGES.settings=async()=>{
       if(!api){const m={voice:['voice','VOICE: '],wake:['wake','WAKE: '],mic:['mic','MIC: ']}[t.dataset.k];if(m)hud.btn(m[0],m[1]+(on?'ON':'OFF'))}}
     if(w){setTheme(w.dataset.c);rpc('settings_set','theme',w.dataset.c);document.querySelectorAll('.sw i').forEach(i=>i.classList.toggle('on',i===w))}}};
 
+// ================= REMINDERS page + copy helper =================
+async function copyText(t){try{await navigator.clipboard.writeText(t)}catch(e){const ta=document.createElement('textarea');ta.value=t;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();try{document.execCommand('copy')}catch(e2){}document.body.removeChild(ta)}toast('Copied')}
+function copyBtn(t){return `<button class="cpy" data-cpy="${esc(t).replace(/"/g,'&quot;')}" style="padding:3px 9px;font-size:10px;flex:none">COPY</button>`}
+PAGES.reminders=async()=>{
+  $('#pages').innerHTML=`<div class="pg rem"><section class="panel wide"><div class="ph"><span>REMINDERS</span><span id="rm_cnt"></span></div>
+   <div id="rm_list"></div>
+   <div class="btnrow"><input id="rm_task" placeholder="Remind me to…" style="flex:2"><input id="rm_when" placeholder="when, e.g. tomorrow at 9am"><button id="rm_add">ADD</button></div>
+   <div class="sub">Say it too: "remind me to call mom at 5pm", "remind me every day at 8pm to take medicine", "what are my reminders", "cancel the reminder to…".</div></section>
+   <section class="panel wide"><div class="ph"><span>DEADLINES &amp; COUNTDOWNS</span><span id="dl_cnt"></span></div>
+   <div id="dl_list"></div>
+   <div class="btnrow"><input id="dl_name" placeholder="e.g. final exam" style="flex:2"><input id="dl_date" placeholder="date, e.g. 15 november"><button id="dl_add">ADD</button></div>
+   <div class="sub">Say it too: "my exam is on 15 November", "how many days until my exam", "what are my deadlines". Unlike reminders, these just count down — no alarm rings.</div></section></div>`;
+  const draw=async()=>{const rs=(await rpc('reminders_get'))||[];$('#rm_cnt').textContent=rs.length;
+    $('#rm_list').innerHTML=rs.length?rs.map(r=>{const d=new Date(r.due);return `<div class="li"><span><b>${esc(r.task)}</b><br><em>${d.toLocaleString([], {weekday:'short',day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})}${r.repeat?' · repeats '+esc(r.repeat.split(':')[0]):''}</em></span><button data-rd="${r.id}" class="warn" style="padding:3px 9px;font-size:10px;flex:none">DELETE</button></div>`}).join(''):'<div class="sub">No reminders yet.</div>'};
+  draw();$('#rm_add').onclick=async()=>{if(!$('#rm_task').value.trim()||!$('#rm_when').value.trim())return;const ok=await rpc('reminder_add',$('#rm_task').value,$('#rm_when').value);if(ok){$('#rm_task').value='';$('#rm_when').value='';draw()}else toast('I could not understand that time')};
+  const dleft=iso=>{const d=Math.round((new Date(iso+'T00:00:00')-new Date(new Date().toDateString()))/864e5);return d<0?`${-d}d overdue`:d===0?'TODAY':d===1?'tomorrow':`${d} days`};
+  const drawD=async()=>{const ds=(await rpc('deadlines_get'))||[];$('#dl_cnt').textContent=ds.length;
+    $('#dl_list').innerHTML=ds.length?ds.map(d=>`<div class="li"><span><b>${esc(d.name)}</b><br><em>${new Date(d.date+'T00:00:00').toLocaleDateString([], {weekday:'short',day:'numeric',month:'short',year:'numeric'})}</em></span><b style="flex:none;margin-right:10px;color:var(--c)">${dleft(d.date)}</b><button data-dd="${d.id}" class="warn" style="padding:3px 9px;font-size:10px;flex:none">DELETE</button></div>`).join(''):'<div class="sub">No deadlines yet.</div>'};
+  drawD();$('#dl_add').onclick=async()=>{if(!$('#dl_name').value.trim()||!$('#dl_date').value.trim())return;const ok=await rpc('deadline_add',$('#dl_name').value,$('#dl_date').value);if(ok){$('#dl_name').value='';$('#dl_date').value='';drawD()}else toast('I could not understand that date')};
+  $('#pages').onclick=async e=>{const b=e.target.closest('button[data-rd]'),d=e.target.closest('button[data-dd]');if(b){await rpc('reminder_del',+b.dataset.rd);draw()}else if(d){await rpc('deadline_del',+d.dataset.dd);drawD()}}};
+// ================= NEWS and SECURITY pages =================
+let NEWSC={items:[],label:''},SECC={rows:[],score:null};
+const SEV={ok:['✔','#19ff6a'],info:['ℹ','#7fb8c4'],warn:['⚠','#ffb300'],bad:['✖','#ff4d4d']};
+PAGES.news=()=>{
+  const cats=[['TOP','top',''],['WORLD','topic','world'],['BANGLADESH','search','Bangladesh'],['TECH','topic','technology'],['BUSINESS','topic','business'],['SPORTS','topic','sports'],['SCIENCE','topic','science'],['HEALTH','topic','health'],['ENTERTAINMENT','topic','entertainment'],['CYBER SECURITY','security','']];
+  $('#pages').innerHTML=`<div class="pg news"><section class="panel wide"><div class="ph"><span>LIVE NEWS</span><span id="nw_lbl">Google News · BBC · security sites</span></div>
+   <div class="btnrow">${cats.map((c,i)=>`<button data-i="${i}">${c[0]}</button>`).join('')}</div>
+   <div class="btnrow"><input id="nw_q" placeholder="News about… (a topic, a country or a city)"><button id="nw_go">SEARCH</button></div>
+   <div id="nw_list"></div><div class="sub">Headlines come from public news feeds. JARVIS does not check whether a story is true. Click a headline for the options.</div></section></div>`;
+  const draw=(items,label)=>{NEWSC={items,label};$('#nw_lbl').textContent=label||'';$('#nw_list').innerHTML=items.length?items.map((it,i)=>`<div class="li nw" data-n="${i}" style="cursor:pointer"><span><b style="color:var(--c)">${i+1}.</b> ${esc(it.title)}<br><em>${esc(it.source)}${it.age?' · '+esc(it.age):''}</em></span></div>`).join(''):'<div class="sub">No stories found. Check your internet connection.</div>'};
+  const load=async(kind,arg,label)=>{$('#nw_list').innerHTML='<div class="sub">Fetching the latest news…</div>';draw((await rpc('news',kind,arg))||[],label)};
+  if(NEWSC.items.length)draw(NEWSC.items,NEWSC.label);else load('top','','The top headlines');
+  $('#pages').onclick=e=>{const b=e.target.closest('button[data-i]'),li=e.target.closest('[data-n]');
+    if(b){const c=cats[+b.dataset.i];load(c[1],c[2],c[0]==='TOP'?'The top headlines':c[0])}
+    else if(e.target.id==='nw_go'){const q=$('#nw_q').value.trim();if(q)load('search',q,'News about '+q)}
+    else if(li){const i=+li.dataset.n,it=NEWSC.items[i],m=$('#modal');m.innerHTML=`<div class="mbox"><p><b>${esc(it.title)}</b><br><span style="color:var(--dim);font-size:12px">${esc(it.source)}${it.age?' · '+esc(it.age):''}</span></p><div><button id="n_tell">TELL ME MORE</button><button id="n_open">OPEN ARTICLE</button><button id="n_x">CLOSE</button></div></div>`;m.classList.add('on');
+      $('#n_x').onclick=()=>m.classList.remove('on');$('#n_open').onclick=()=>{m.classList.remove('on');rpc('news_open',i)};$('#n_tell').onclick=()=>{m.classList.remove('on');rpc('send','tell me more about number '+(i+1))}}};
+  $('#nw_q').onkeydown=e=>{if(e.key==='Enter')$('#nw_go').click()}};
+
+PAGES.security=()=>{
+  $('#pages').innerHTML=`<div class="pg sec">
+   <section class="panel wide"><div class="ph"><span>PC SECURITY CHECK</span><span id="sc_score">${SECC.score==null?'':'SCORE '+SECC.score+' / 100'}</span></div>
+    <div class="btnrow"><button id="sc_run">RUN SECURITY CHECK</button><span class="sub">Checks THIS PC only and changes nothing. Takes about 20 seconds.</span></div><div id="sc_out"></div></section>
+   <section class="panel"><div class="ph"><span>CVE LOOKUP</span><span>NIST NVD</span></div><div class="btnrow"><input id="cv_in" placeholder="CVE-2021-44228"><button id="cv_go">LOOK UP</button><button id="cv_new">LATEST CRITICAL</button></div><div class="out" id="cv_out"></div></section>
+   <section class="panel"><div class="ph"><span>LINK / PHISHING CHECK</span><span>QUICK + DEEP SCAN</span></div><div class="btnrow"><input id="lk_in" placeholder="paste a link"><button id="lk_go">CHECK</button><button id="lk_deep">DEEP SCAN</button></div><div class="out" id="lk_out"></div><div class="sub">Deep scan checks known phishing/malware lists, how new the domain is, and follows short links. Takes a few seconds.</div></section>
+   <section class="panel"><div class="ph"><span>SUSPICIOUS MESSAGE CHECK</span><span>SMS / EMAIL / WHATSAPP TEXT</span></div><textarea id="sm_in" rows="4" placeholder="paste a suspicious message here" style="width:100%;background:rgba(0,0,0,.45);border:1px solid var(--c);color:var(--tx);font:inherit;padding:8px"></textarea><div class="btnrow"><button id="sm_go">CHECK MESSAGE</button></div><div class="out" id="sm_out"></div></section>
+   <section class="panel"><div class="ph"><span>PASSWORD TOOLS</span><span>NEVER SAY A PASSWORD ALOUD</span></div><div class="btnrow"><input id="pw_in" type="password" placeholder="type a password to test" autocomplete="off"><button id="pw_go">TEST</button></div><div class="btnrow"><button id="pw_gen">GENERATE STRONG PASSWORD</button></div><div class="out" id="pw_out"></div><div class="sub">The test sends only the first 5 characters of the password's hash to Have I Been Pwned. The password never leaves this PC.</div></section>
+   <section class="panel"><div class="ph"><span>HASH AND ENCODE</span><span>LOCAL</span></div><textarea id="hs_in" rows="3" placeholder="text" style="width:100%;background:rgba(0,0,0,.45);border:1px solid var(--c);color:var(--tx);font:inherit;padding:8px"></textarea><div class="btnrow"><button data-h="sha256">SHA-256</button><button data-h="sha1">SHA-1</button><button data-h="md5">MD5</button><button data-h="b64enc">BASE64 ▸</button><button data-h="b64dec">◂ BASE64</button><button data-h="urlenc">URL ▸</button><button data-h="urldec">◂ URL</button><button data-h="jwt">JWT</button></div><div class="out" id="hs_out" style="word-break:break-all"></div></section>
+   <section class="panel wide"><div class="ph"><span>CYBER SECURITY NEWS</span><span><button id="sn_go" style="padding:3px 10px;font-size:10px">REFRESH</button></span></div><div id="sn_list"></div></section></div>`;
+  const drawRows=(rows,score)=>{SECC={rows,score};$('#sc_score').textContent=score==null?'':'SCORE '+score+' / 100';
+    $('#sc_out').innerHTML=rows.map(r=>{const s=SEV[r.status]||SEV.info;return `<div class="li"><span><b style="color:${s[1]}">${s[0]}</b> &nbsp;<b style="font-weight:400">${esc(r.name)}</b>: ${esc(r.detail)}${r.fix?`<br><em>How to fix: ${esc(r.fix)}</em>`:''}</span></div>`}).join('')};
+  if(SECC.rows.length)drawRows(SECC.rows,SECC.score);
+  $('#sc_run').onclick=async()=>{$('#sc_out').innerHTML='<div class="sub">Checking this PC… about 20 seconds</div>';const r=await rpc('sec_audit');if(r)drawRows(r.rows,r.score)};
+  const cveHtml=c=>c.error?esc(c.error):`<b>${esc(c.id)}</b> · ${esc(c.severity||'n/a')}${c.score!=null?' ('+c.score+')':''} · ${esc(c.published)}<br>${esc(c.desc)}`;
+  $('#cv_go').onclick=async()=>{const v=$('#cv_in').value.trim();if(!v)return;$('#cv_out').textContent='Looking up…';const c=await rpc('cve',v);$('#cv_out').innerHTML=cveHtml(c)+(c&&!c.error?'<div style="margin-top:6px">'+copyBtn(c.id+': '+c.desc)+'</div>':'')};
+  $('#cv_new').onclick=async()=>{$('#cv_out').textContent='Checking the database…';const r=(await rpc('cve_latest'))||[];$('#cv_out').innerHTML=r.length?r.map(cveHtml).join('<hr style="border-color:#0b4a57">'):'No new critical vulnerabilities found, or the database could not be reached.'};
+  const riskColor={high:'#ff4d4d',medium:'#ffb300',low:'#19ff6a',unknown:'#7fb8c4'};
+  const drawLink=r=>{const c=riskColor[r.risk]||'#fff';$('#lk_out').innerHTML=`<b style="color:${c}">${esc(r.risk.toUpperCase())} RISK${r.score!=null?' ('+r.score+'/100)':''}</b>${r.known?' <b style="color:#ff4d4d">· ON A KNOWN THREAT LIST</b>':''}<br>${(r.flags||[]).map(f=>`${SEV[f[0]]?SEV[f[0]][0]:'•'} ${esc(f[1])}`).join('<br>')||'No warning signs found.'}${r.final?`<br><em>Redirects to: ${esc(r.final)}</em>`:''}<br><em>A check is not a guarantee. Be careful with links you did not expect.</em> ${copyBtn($('#lk_in').value)}`};
+  $('#lk_go').onclick=async()=>{const v=$('#lk_in').value.trim();if(!v)return;$('#lk_out').textContent='Checking…';drawLink(await rpc('link_check',v))};
+  $('#lk_deep').onclick=async()=>{const v=$('#lk_in').value.trim();if(!v)return;$('#lk_out').textContent='Deep scanning… checking threat lists, domain age and redirects';drawLink(await rpc('link_check_deep',v))};
+  $('#sm_go').onclick=async()=>{const v=$('#sm_in').value.trim();if(!v)return;$('#sm_out').textContent='Checking…';const r=await rpc('scam_check',v);const c=riskColor[r.risk]||'#fff';
+    $('#sm_out').innerHTML=`<b style="color:${c}">${esc(r.risk.toUpperCase())} RISK of being a scam (${r.score}/100)</b><br>${(r.flags||[]).map(f=>`${SEV[f[0]]?SEV[f[0]][0]:'•'} ${esc(f[1])}`).join('<br>')||'No strong warning signs found.'}<br><em>This is a quick check, not a guarantee. When in doubt, contact the company directly using a number or address you already know, not one in the message.</em>`};
+  $('#pw_go').onclick=async()=>{const v=$('#pw_in').value;if(!v)return;$('#pw_out').textContent='Checking…';const r=await rpc('pw_check',v);$('#pw_in').value='';
+    $('#pw_out').innerHTML=`Strength: <b>${esc(r.strength.label)}</b> (about ${r.strength.bits} bits, ${r.strength.length} characters)<br>`+(r.pwned==null?'Breach check unavailable (offline).':r.pwned>0?`<b style="color:#ff4d4d">Found in ${r.pwned.toLocaleString()} known data breaches. Do not use it.</b>`:'<b style="color:#19ff6a">Not found in known breaches.</b>')};
+  $('#pw_gen').onclick=async()=>{const p=await rpc('pw_generate',16);$('#pw_out').innerHTML=`<b style="word-break:break-all">${esc(p)}</b><br><em>Already on your clipboard. Paste it into a password manager, then copy something else to clear it.</em> ${copyBtn(p)}`};
+  $('#pages').onclick=async e=>{const cb=e.target.closest('button[data-cpy]');if(cb){copyText(cb.dataset.cpy);return}const b=e.target.closest('button[data-h]');if(b){const r=await rpc('hash_tool',$('#hs_in').value,b.dataset.h);$('#hs_out').innerHTML=esc(r)+' '+copyBtn(r)}};
+  const news=async()=>{$('#sn_list').innerHTML='<div class="sub">Fetching…</div>';const it=(await rpc('news','security',''))||[];$('#sn_list').innerHTML=it.length?it.map((x,i)=>`<div class="li"><span>${esc(x.title)}<br><em>${esc(x.source)}${x.age?' · '+esc(x.age):''}</em></span><button data-o="${i}" style="padding:3px 10px;font-size:10px;flex:none">OPEN</button></div>`).join(''):'<div class="sub">No stories. Check your internet connection.</div>'};
+  $('#sn_go').onclick=news;news();
+  const prev=$('#pages').onclick;$('#pages').onclick=e=>{const o=e.target.closest('button[data-o]');if(o)rpc('news_open',+o.dataset.o);else prev(e)}};
+
 const HELP=[['ASK ME ANYTHING',['research electric cars','explain black holes in simple words','summarize the history of bangladesh','what is bangladesh','who is tesla','how tall is the eiffel tower','what are you doing','tell me a joke','tell me something interesting']],
  ['THIS COMPUTER',['tell me about my pc','how much storage do i have','what is using my cpu','how long has my pc been on','how much battery do i have']],
  ['NETWORK',['network status','speed test','ping google','who is connected to my wifi','what apps are using the internet','what is my ip address','data usage','turn off network alerts','turn on network alerts']],
  ['APPS AND WEB',['open chatgpt','open gemini','open claude','open an ai site','open chrome','open youtube in firefox','open incognito youtube','search python on youtube','open downloads','weather in dhaka','go to example dot com']],
  ['CONTROL THE PC',['set volume to 40','brightness 60','pause','next song','show desktop','lock the pc','shut down in 10 minutes','cancel shutdown','close notepad']],
  ['MEMORY AND TEACHING',['my name is …','remember that …','what do you remember','who is …','if someone asks …, say …','call me …']],
+ ['REMINDERS',['remind me to … at …','what are my reminders','cancel the reminder to …']],
+ ['DEADLINES & COUNTDOWNS',['my exam is on 15 november','how many days until my exam','what are my deadlines']],
+ ['WHATSAPP',['send … a whatsapp saying …','call … on whatsapp','video call … on whatsapp']],
+ ['ASK PROPERLY (no AI key needed)',['what is the capital of …','who founded …','what does … mean','convert 5 km to miles','translate … into bangla']],
+ ['BUILD SOMETHING (needs a free AI key)',['build me a … website','create a … script','copy that','paste that']],
  ['PHONE CALLS',['save Rahim\'s number as …','call Rahim','call …','list my contacts','hang up','answer the call']],
  ['FRIENDS AND FUN',['welcome me','good morning','welcome my friends','welcome …','wish … happy birthday','today is … birthday','tell … that …','say good luck to …','eid mubarak to everyone','hack the …','suit up','i am bored']],
  ['FEELINGS: TELL ME HOW YOU ARE',['i won','i passed my exam','i am so happy','i am sad','i am stressed','i feel lonely','i can not sleep','my exam is tomorrow']],
  ['UPDATES AND ABOUT',['check for updates','update now','what is new','what version are you']],
- ['SCREENS',['show system panel','show network monitor','show app launcher','show control center','show memory panel','show settings panel','go home']]];
+ ['READ MY SCREEN',['what is on my screen','read this','explain this error','read what i copied','explain what i copied','what window is this']],
+ ['LIVE NEWS',['tell me the news','technology news','bangladesh news','news about electric cars','what is happening in japan','tell me more about number two','open number one']],
+ ['CYBER SECURITY',['run a security check','is my wifi secure','tell me about cve 2021 44228','latest critical vulnerabilities','cyber security news','generate a strong password','is the link in my clipboard safe','security tips']],
+ ['SCREENS',['show news','show security panel','show system panel','show network monitor','show app launcher','show control center','show memory panel','show settings panel','go home']]];
 let UPD=null;
 function showUpdate(info){const m=$('#modal'),close=()=>m.classList.remove('on');m.classList.add('on');
   if(!info||info.error){m.innerHTML=`<div class="mbox"><p>${esc((info&&info.error)||'I could not check for updates.')}</p><div><button id="m_x">CLOSE</button></div></div>`;$('#m_x').onclick=close;return}
@@ -560,13 +648,23 @@ const DEMO={_s:0,_h(base,amp){return Array.from({length:90},(_,i)=>Math.max(0,ba
  apps_list:()=>['Calculator','Camera','Chrome','Discord','Excel','File Explorer','Firefox','Notepad','Paint','Photos','Settings','Snipping Tool','Spotify','Task Manager','VLC','Visual Studio Code','WhatsApp','Word'],
  sites_list:()=>['claude','facebook','github','gmail','instagram','netflix','reddit','spotify','whatsapp','youtube'],launch:n=>'Opening '+n+', Sir.',
  get_brightness:()=>70,set_brightness:()=>true,set_volume:()=>true,power:(k)=>'Demo: '+k,prank:n=>{hud.hack(n);return true},
+ news:(k,a)=>[{title:'Bangladesh and India sign new trade deal',source:'The Daily Star',age:'2 hours ago',link:'#'},{title:'New AI chip announced by major firms',source:'Reuters',age:'18 minutes ago',link:'#'},{title:'Tigers win the cricket series',source:'Prothom Alo',age:'1 day ago',link:'#'},{title:'Critical flaw in a popular VPN is being exploited',source:'The Hacker News',age:'1 hour ago',link:'#'},{title:'Researchers find new ransomware family',source:'BleepingComputer',age:'5 hours ago',link:'#'}],news_open:()=>true,
+ sec_audit:()=>({score:64,rows:[{name:'Antivirus (Defender)',status:'ok',detail:'On, real-time protection active, definitions up to date.'},{name:'Firewall',status:'ok',detail:'On for all network profiles.'},{name:'Remote Desktop',status:'warn',detail:'Remote Desktop is switched on.',fix:'Settings > System > Remote Desktop > turn it off if you do not use it.'},{name:'Windows updates',status:'warn',detail:'Last update installed 112 days ago.',fix:'Settings > Windows Update > Check for updates.'},{name:'Wi-Fi security',status:'ok',detail:'HomeNet-5G: WPA2-Personal.'},{name:'Startup programs',status:'info',detail:'6 start with Windows: OneDrive, Discord, Spotify.'}]}),
+ cve:id=>({id:'CVE-2021-44228',severity:'Critical',score:10.0,published:'2021-12-10',desc:'Apache Log4j2 JNDI features do not protect against attacker controlled LDAP endpoints.'}),cve_latest:()=>[],
+ link_check:u=>({risk:/xyz|bit\.ly|paypal/.test(u)?'high':'low',score:/xyz|bit\.ly|paypal/.test(u)?78:0,known:false,flags:/xyz|bit\.ly|paypal/.test(u)?[['bad','Mentions paypal but is not paypal.com.'],['warn','Not encrypted (http, not https).']]:[]}),
+ link_check_deep:u=>({risk:/xyz|bit\.ly|paypal/.test(u)?'high':'low',score:/xyz|bit\.ly|paypal/.test(u)?95:0,known:/xyz/.test(u),flags:/xyz|bit\.ly|paypal/.test(u)?[['bad','This address is on a public list of known phishing sites.'],['bad','Mentions paypal but is not paypal.com.'],['warn','The website name was registered only 4 days ago.']]:[]}),
+ scam_check:t=>({risk:/otp|pin|password|won|lottery|urgent/i.test(t)?'high':'low',score:/otp|pin|password|won|lottery|urgent/i.test(t)?82:5,flags:/otp|pin|password|won|lottery/i.test(t)?[['bad','Asks for a code, PIN or password'],['bad','Creates urgency or pressure']]:[]}),
+ pw_check:p=>({strength:{bits:p.length*5,label:p.length>11?'strong':'weak',length:p.length},pwned:p==='password'?9545824:0}),pw_generate:()=>'k7#Qm2!vXz9&Lp4w',hash_tool:(t,k)=>k+': '+btoa(t).slice(0,40),
+ reminders_get:()=>[{id:1,task:'call mom',due:new Date(Date.now()+3600000).toISOString(),repeat:null}],reminder_add:()=>true,reminder_del:()=>true,
+ deadlines_get:()=>[{id:1,name:'final exam',date:new Date(Date.now()+13*864e5).toISOString().slice(0,10)},{id:2,name:'project deadline',date:new Date(Date.now()+2*864e5).toISOString().slice(0,10)}],deadline_add:()=>true,deadline_del:()=>true,
+ wa_send:()=>'Demo: sent',wa_call:()=>'Demo: calling',build_code:()=>'Demo: built',open_folder:()=>true,
  update_check:()=>({available:true,version:'3.3',current:'3.2',notes:'What is new in 3.3\n- Google is now the first search source\n- New version notice and one-click update\n- Friendlier replies to everything you say\n- "Welcome to me" greets you, not a stranger',page:'#'}),
  update_install:()=>{let p=0;const iv=setInterval(()=>{p+=14;hud.updprogress(Math.min(p,100));if(p>=100)clearInterval(iv)},400);return 'Downloading the update now, Sir.'},
  contact_add:()=>true,contact_del:()=>true,call_contact:n=>'Demo: calling…',call_check:()=>[{name:'ADB (phone dials by itself)',ok:false,detail:'not found'},{name:'Phone Link app',ok:true,detail:'installed'},{name:'Calling method',ok:true,detail:'auto'}],
  memory_get:()=>({contacts:[{name:'Rahim',number:'01712345678'},{name:'Nila',number:'01812345678'}],name:'Abu Tanim',address:'Sir',facts:[{t:'my birthday is 5 May'},{t:"Rahim is my best friend and he lives in Dhaka"}],qa:[{q:'who made you',a:'Mr Tan built me with love.'}]}),
  mic_devices:()=>[{index:1,name:'Microphone Array (Realtek Audio)',default:true},{index:3,name:'Headset Microphone (USB)'}],
  self_test:()=>[{name:'Microphone',ok:true,detail:'1 input device found'},{name:'Wake word mode',ok:false,detail:'ON: I only react when you start with “Jarvis”. Turn it off in Settings'},{name:'Internet',ok:true,detail:'21 ms'}],
- settings_get:()=>({google:'working: official API',auto_update:true,version:'3.2',call_method:'auto',ai:false,timing:false,sens:'high',lang:'en-US',mic_device:null,voice:true,mic:true,wake:false,beep:false,pause:.8,voice_mode:'auto',net_alerts:true,keep_awake:false,theme:C,version:'3.0'}),settings_set:()=>true,
+ settings_get:()=>({news_edition:'us',google:'working: official API',auto_update:true,version:'3.2',call_method:'auto',ai:false,timing:false,sens:'high',lang:'en-US',mic_device:null,voice:true,mic:true,wake:false,beep:false,pause:.8,voice_mode:'auto',net_alerts:true,keep_awake:false,theme:C,version:'3.0'}),settings_set:()=>true,
  send:t=>{demoSend(t)}};
 // ---- API called from Python
 const hud={
@@ -576,7 +674,7 @@ const hud={
   stats(o){tg.cpu=o.cpu;tg.mem=o.ram;tg.dsk=o.disk;hist.push(o.cpu);hist.shift();cpuGraph();
     $('#bat').textContent=o.bat==null?'AC POWER':o.bat+'%'+(o.plug?' · CHARGING':'');$('#up').textContent=o.up+' KB/s';$('#dn').textContent=o.down+' KB/s';
     $('#upt').textContent=fmtUp(o.uptime);$('#inet').textContent=o.online===false?'OFFLINE':(o.lat!=null?'ONLINE · '+o.lat+' ms':'ONLINE');const nc=$('#netchip');nc.className=o.online===false?'off':'';nc.lastChild.textContent=o.online===false?'INTERNET DOWN':'ONLINE'+(o.lat!=null?' · '+o.lat+' ms':'');$('#prc').textContent=o.procs;$('#host').textContent=o.host;$('#osn').textContent=o.os},
-  theme(c){setTheme(c)},page(n){go(n)},help(){showHelp()},report(r){showReport(r)},update(i){UPD=i;const b=$('#updbtn');b.textContent='⬆ UPDATE '+i.version;b.classList.add('on');document.querySelector('#tabs button[data-p=settings]').classList.add('upd');toast('A new version ('+i.version+') is available')},updprogress(p){const bar=$('#u_bar');if(!bar)return;if(p<0){$('#u_msg').textContent='The update failed. Details are in the Comm Log.';$('#u_x').style.display='flex';$('#u_c').onclick=()=>$('#modal').classList.remove('on')}else{bar.style.width=p+'%';$('#u_msg').textContent=p>=100?'Update downloaded. Restarting…':'Downloading the update… '+p+'%'}},level(r,t){MIC.r=r;MIC.t=t;const b=$('#lv_bar');if(b){const sc=Math.max(t*4,300);b.style.width=Math.min(100,r/sc*100)+'%';$('#lv_thr').style.left=Math.min(100,t/sc*100)+'%';$('#lv_txt').textContent=r+'  ·  threshold '+t}},toast(t){toast(t)},
+  theme(c){setTheme(c)},page(n){go(n)},help(){showHelp()},news(items,label){NEWSC={items,label}},security(rows,score){SECC={rows,score}},report(r){showReport(r)},reminderDue(r){const m=$('#modal');m.innerHTML=`<div class="mbox"><div style="display:block;font-family:var(--hf);letter-spacing:4px;color:var(--c);margin-bottom:8px">⏰ REMINDER</div><p>${esc(r.task)}</p><div><button id="rm_ok">GOT IT</button></div></div>`;m.classList.add('on');$('#rm_ok').onclick=()=>m.classList.remove('on')},project(p){const m=$('#modal');m.innerHTML=`<div class="mbox"><p>Built ${p.files.length} file(s):<br><em>${p.files.map(esc).join('<br>')}</em></p><div><button id="pj_open">OPEN FOLDER</button><button id="pj_x">CLOSE</button></div></div>`;m.classList.add('on');$('#pj_x').onclick=()=>m.classList.remove('on');$('#pj_open').onclick=()=>rpc('open_folder',p.folder)},update(i){UPD=i;const b=$('#updbtn');b.textContent='⬆ UPDATE '+i.version;b.classList.add('on');document.querySelector('#tabs button[data-p=settings]').classList.add('upd');toast('A new version ('+i.version+') is available')},updprogress(p){const bar=$('#u_bar');if(!bar)return;if(p<0){$('#u_msg').textContent='The update failed. Details are in the Comm Log.';$('#u_x').style.display='flex';$('#u_c').onclick=()=>$('#modal').classList.remove('on')}else{bar.style.width=p+'%';$('#u_msg').textContent=p>=100?'Update downloaded. Restarting…':'Downloading the update… '+p+'%'}},level(r,t){MIC.r=r;MIC.t=t;const b=$('#lv_bar');if(b){const sc=Math.max(t*4,300);b.style.width=Math.min(100,r/sc*100)+'%';$('#lv_thr').style.left=Math.min(100,t/sc*100)+'%';$('#lv_txt').textContent=r+'  ·  threshold '+t}},toast(t){toast(t)},
   hack(n){hackStart(n)},hackEnd(){hackStop(false)},
   btn(n,t){const b=$('#b'+n);if(b)b.textContent=t}
 };
@@ -597,7 +695,7 @@ $('#bfull').onclick=()=>api?api.fullscreen():(document.fullscreenElement?documen
 addEventListener('keydown',e=>{const inp=/INPUT|SELECT|TEXTAREA/.test((document.activeElement||{}).tagName||'');
   if(e.key==='Escape'){$('#modal').classList.remove('on')}
   if(!inp&&(e.key==='?'||e.key==='F1')){e.preventDefault();showHelp();return}
-  if(e.altKey&&/^[1-7]$/.test(e.key)){go(['home','system','network','apps','control','memory','settings'][+e.key-1]);return}
+  if(e.altKey&&/^[1-9]$/.test(e.key)){go(['home','system','network','apps','control','memory','reminders','news','security','settings'][+e.key-1]);return}
   if((e.ctrlKey&&e.key==='k')||(e.key==='/'&&document.activeElement!==tin)){e.preventDefault();toggleType()}});
 setInterval(()=>{const d=new Date();$('#clock').textContent=pad(d.getHours())+':'+pad(d.getMinutes())+':'+pad(d.getSeconds());$('#date').textContent=d.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'}).toUpperCase()},250);
 setTimeout(()=>{if(!api)hud.update(DEMO.update_check())},9000);
