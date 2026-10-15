@@ -121,7 +121,7 @@ Your folder should look like this (don't separate the files — `Jarvis.exe` nee
 - **Phishing & scam detection**: checks links against known threat lists, catches look-alike brand names, and scans suspicious SMS/email text for scam patterns
 - **PC security check**: antivirus, firewall, open ports, Wi-Fi security and more, with a score and fixes
 - Password strength + breach check, CVE lookup, hashing tools
-- **Reminders** ("remind me to call Rahim at 5pm")
+- **Reminders** ("remind me to call Rahim at 5pm") & **deadline countdowns** ("my exam is on 15 November" → "how many days until my exam?")
 - **Live news**, by topic or country
 - Reads and explains text on your screen, only when you ask
 - WhatsApp messages & calls, phone calls via Phone Link or ADB
@@ -161,6 +161,8 @@ A glowing cyan **arc-reactor interface** that comes alive while JARVIS listens, 
 "Jarvis, check this message for scams"
 "Jarvis, generate a strong password"
 "Jarvis, remind me to renew my passport tomorrow at 9am"
+"Jarvis, my exam is on 15 November"
+"Jarvis, how many days until my exam?"
 ```
 
 </td>
