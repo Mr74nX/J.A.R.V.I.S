@@ -130,7 +130,7 @@ Your folder must look exactly like this:
 - Open ports, data usage
 - Live spoken alerts when the internet drops or comes back
 
-### 🛡️ NEW in v3.3 — Security & More
+### 🛡️ NEW in v2.0 — Security & More
 - **Phishing & scam detection**: checks links against known threat lists, catches look-alike brand names, and scans suspicious SMS/email text for scam patterns
 - **PC security check**: antivirus, firewall, open ports, Wi-Fi security and more, with a score and fixes
 - Password strength + breach check, CVE lookup, hashing tools
