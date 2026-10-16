@@ -52,28 +52,41 @@ Just talk to it like a friend. It opens your apps, checks your PC, tests your in
 
 ## ⬇️ Download & Install
 
+Go to the [**Releases page**](../../releases/latest) and download the files below.
+
+| File | Required? | What it is |
+|---|:---:|---|
+| 📦 **`JARVIS.exe`** | ✅ **Yes** | The app itself |
+| 📦 **`_internal.7z`** | ✅ **Yes** | The files JARVIS needs to run. **JARVIS will not start without it.** |
+| 🔑 **`jarvis_config.json`** | ⭐ Optional | For a free AI key and your own shortcuts. Skip it if you just want to try JARVIS. |
+
 ### 🚀 Quick Start
 
 | Step | What to do |
 |:---:|---|
-| **1** | 📥 Download the latest **`JARVIS-windows-vX.Y.zip`** from [Releases](../../releases/latest) |
-| **2** | 📁 Extract it anywhere, for example `C:\Jarvis\` — keep the files together |
-| **3** | 🖱️ Double-click **`Jarvis.exe`** inside the extracted `JARVIS` folder |
-| **4** | 🎤 Allow microphone access when Windows asks |
-| **5** | 🗣️ Say **"Jarvis, hello"** and enjoy! |
+| **1** | 📥 Download **`JARVIS.exe`** and **`_internal.7z`** from [Releases](../../releases/latest) |
+| **2** | 📁 Create a new folder anywhere, for example `C:\Jarvis\`, and put both files inside it |
+| **3** | 🗜️ **Extract `_internal.7z` right there** (right-click → **7-Zip → Extract Here**). You must end up with a folder named `_internal` next to `JARVIS.exe` |
+| **4** | 🖱️ Double-click **`JARVIS.exe`** |
+| **5** | 🎤 Allow microphone access when Windows asks |
+| **6** | 🗣️ Say **"Jarvis, hello"** and enjoy! |
 
-Your folder should look like this (don't separate the files — `Jarvis.exe` needs everything next to it):
+> 🗜️ **Can't open a `.7z` file?** Install the free [7-Zip](https://www.7-zip.org/), then right-click `_internal.7z` → **7-Zip → Extract Here**.
+
+Your folder must look exactly like this:
 
 ```
-📁 JARVIS
- ├── 📄 Jarvis.exe
- ├── 📁 _internal
- └── 📄 jarvis_config.example.json   (copy → jarvis_config.json to unlock optional AI features)
+📁 C:\Jarvis
+ ├── 📄 JARVIS.exe
+ ├── 📁 _internal            ← extracted from _internal.7z (you can delete the .7z afterwards)
+ └── 📄 jarvis_config.json   ← optional, only if you want AI features
 ```
+
+> ⚠️ **Do NOT put `JARVIS.exe` alone on your Desktop.** It needs the `_internal` folder right next to it. If the folder is missing, the app will close immediately or show a missing file error.
 
 > 💡 **Windows SmartScreen warning?** Click **More info → Run anyway**. This appears for any new app that is not digitally signed.
 
-> 🔄 **Updates are automatic.** When a new version is out, a glowing **⬆ UPDATE** button appears next to the tabs and JARVIS tells you out loud. One click downloads, verifies and installs it, and your settings and memory are kept.
+> 🔄 **Updates.** When a new version is out, JARVIS tells you out loud. Download the new `JARVIS.exe` and `_internal.7z` from the latest [Release](../../releases/latest), extract `_internal.7z` into the same folder (replace the old files), and run it again. Your `jarvis_config.json`, settings and memory are kept.
 
 <img src="assets/divider.svg" width="100%" alt=""/>
 
@@ -198,9 +211,20 @@ A glowing cyan **arc-reactor interface** that comes alive while JARVIS listens, 
 
 **JARVIS works fully without any key** — voice control, PC control, network tools, security checks, reminders, and even factual answers (capitals, dates, definitions, conversions) all work out of the box.
 
-Adding a **free** AI key unlocks two extra things: open-ended answers written in JARVIS's own words (instead of a merged summary of sources), and the **code/website builder**.
+Want an even smarter JARVIS? Adding a **free** AI key unlocks two extra things:
 
-Create a file named **`jarvis_config.json`** next to `Jarvis.exe` (copy `jarvis_config.example.json` and rename it):
+- 🧠 **Open-ended answers** written in JARVIS's own words (instead of a merged summary of sources)
+- 🛠️ **The code / website builder**
+
+### 🔑 How to add your key (2 minutes)
+
+| Step | What to do |
+|:---:|---|
+| **1** | 🌐 Get a free key at [console.groq.com](https://console.groq.com) (no card required) |
+| **2** | 📥 Download **`jarvis_config.json`** from the [Releases page](../../releases/latest) |
+| **3** | 📁 Put it **next to `JARVIS.exe`** (same folder as the `_internal` folder) |
+| **4** | ✏️ Open it with **Notepad** and paste your key between the quotes, like below |
+| **5** | 💾 Save, then restart JARVIS |
 
 ```json
 {
@@ -212,17 +236,24 @@ Create a file named **`jarvis_config.json`** next to `Jarvis.exe` (copy `jarvis_
 }
 ```
 
-Get a free key at [console.groq.com](https://console.groq.com) — no card required.
+> 🔒 **Never share your API key** or upload this file anywhere. Keep it only on your own PC.
 
-> 🔒 **Never share your API key** or upload this file to GitHub. It's already excluded by `.gitignore`.
+> ✅ Say **"Jarvis, run a self test"** after restarting. If the key works, open-ended questions get smarter answers.
 
 <details>
 <summary><b>🔧 Add your own websites, apps, and more (click to expand)</b></summary>
 
 <br/>
 
+You can add more options to the same `jarvis_config.json`:
+
 ```json
 {
+  "llm": {
+    "api_key": "YOUR_FREE_API_KEY_HERE",
+    "base_url": "https://api.groq.com/openai/v1",
+    "model": "llama-3.3-70b-versatile"
+  },
   "sites": { "my blog": "https://example.com" },
   "apps":  { "my editor": "C:\\Path\\To\\App.exe" },
   "country_code": "880",
@@ -244,6 +275,7 @@ Then just say *"Jarvis, open my blog"*. `country_code` is used for WhatsApp numb
 | 🪟 **OS** | Windows 10 / 11 (64-bit) |
 | 🎤 **Microphone** | Any working mic |
 | 🌐 **Internet** | Needed for speech recognition, the natural voice, and web-based answers |
+| 🗜️ **Extractor** | [7-Zip](https://www.7-zip.org/) (free) to open `_internal.7z` |
 | 🐍 **Python** | ❌ Not needed |
 
 <img src="assets/divider.svg" width="100%" alt=""/>
@@ -251,11 +283,20 @@ Then just say *"Jarvis, open my blog"*. `country_code` is used for WhatsApp numb
 ## ❓ FAQ
 
 <details>
-<summary><b>The app won't open / shows a missing file error</b></summary>
+<summary><b>The app won't open / closes right away / shows a missing file error</b></summary>
 
 <br/>
 
-Make sure `Jarvis.exe` and the `_internal` folder are in the **same folder**. Never move the exe out on its own — extract the whole ZIP as one piece.
+You most likely skipped the `_internal` folder. Download **`_internal.7z`** from Releases, extract it in the **same folder** as `JARVIS.exe`, so you can see a folder called `_internal` right next to the exe. Never move the exe out on its own.
+
+</details>
+
+<details>
+<summary><b>I can't open the .7z file</b></summary>
+
+<br/>
+
+Install the free [7-Zip](https://www.7-zip.org/), then right-click `_internal.7z` → **7-Zip → Extract Here**. Make sure the result is a folder named `_internal` (not `_internal\_internal`).
 
 </details>
 
@@ -264,16 +305,16 @@ Make sure `Jarvis.exe` and the `_internal` folder are in the **same folder**. Ne
 
 <br/>
 
-Check your Windows microphone permissions and default input device, and watch the live level meter in **Settings → Microphone**. Then try saying *"I am far away"* for far-field mode, or raise the sensitivity there.
+Check your Windows microphone permissions and default input device, and watch the live level meter in **Settings → Microphone**. Then try saying *"I am far away"* for far-field mode, or raise the sensitivity there. If your sound card has a **Microphone Boost**, keep it low (0 dB), because high boost picks up noise and makes JARVIS slow to finish listening.
 
 </details>
 
 <details>
-<summary><b>Do I need an API key?</b></summary>
+<summary><b>Do I need the jarvis_config.json / an API key?</b></summary>
 
 <br/>
 
-No. JARVIS works fully without one. A free key only adds AI-written answers in its own words and the code/website builder — see [AI Setup](#%EF%B8%8F-optional-enable-ai-features).
+No. JARVIS works fully without them. The config file is only for the optional free AI key (smarter answers + code builder) and your own shortcuts. See [AI Setup](#%EF%B8%8F-optional-enable-ai-features).
 
 </details>
 
@@ -342,3 +383,4 @@ JARVIS is **free to use** for personal use. The source code is **not public**, a
 <img src="assets/divider.svg" width="100%" alt=""/>
 
 </div>
+</document_content>
